@@ -970,7 +970,9 @@ static char *printAliasInstrEx(MCInst *MI, SStream *OS, void *info)
 			}
 
 			cr = getBICR(MCOperand_getReg(MCInst_getOperand(MI, 1)));
-			if (cr > PPC_CR0) {
+// TODO: retdec, fix https://github.com/aquynh/capstone/issues/970
+//			if (cr > PPC_CR0) { // retdec: original
+			if (cr >= PPC_CR0) { // retdec: new
 				if (MI->csh->detail) {
 					MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].type = PPC_OP_CRX;
 					MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].crx.scale = 4;
